@@ -34,14 +34,17 @@ class App extends React.Component {
             <button onClick={this.props.startGame}>Start Playing</button>
           </React.Fragment>
         )}
+        
         { playPhase === playPhases.PLAYING && (
-          <p>
-            It is currently turn number {turnDisplayed}. Player {playerNumberDisplayed}, it is your turn. Click on the board to place {indefArticle} {playerSymbol} for your turn.
-          </p>
-        )}
-        <Board board={board} />
-        {message.length > 0 && (
-          <Message content={message} />
+          <React.Fragment>
+            <p>
+              It is currently turn number {turnDisplayed}. Player {playerNumberDisplayed}, it is your turn. Click on the board to place {indefArticle} {playerSymbol} for your turn.
+            </p>
+            <Board board={board} />
+            {message.length > 0 && (
+              <Message content={message} />
+            )}
+          </React.Fragment>
         )}
       </div>
     )

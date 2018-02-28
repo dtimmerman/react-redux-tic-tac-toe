@@ -71,9 +71,33 @@ const remapRow = (x, player, row) => {
   return row.map((col, index) => index === x ? player : col)
 }
 
-// const reduceBoardToPlayerMoves = (collection, player, moves) => {
-//   return
-// }
+const reduceBoardToPlayerMoves = (collection, y) => {
+  return collection.reduce(
+    (acc, cur, ind) => {
+
+      // handle recursion case:
+      if (Array.isArray(cur)) {
+        return [
+          ...acc,
+          ...reduceBoardToPlayerMoves(cur, ind)
+        ]
+      }
+
+      // handle base case:
+
+      // accumulate values for reduction which are equal to a move, in a special 3-tuple format
+      if (cur !== '') {
+        return [
+          ...acc,
+          { x: ind, y, player: cur }
+        ]
+      }
+
+      // don't accumulate values for reduction which are not equal to moves
+      return acc
+    }, []
+  )
+}
 
 const ticTacToe = (state = initialState, action) => {
   const { turn, board, playPhase } = state
@@ -103,6 +127,10 @@ const ticTacToe = (state = initialState, action) => {
 
       if (canMove) {
         const newBoard = remapBoard(x, y, player, board)
+        const hasWinner = false
+        const message = hasWinner ? `Player ${player} has won` : ''
+
+        console.log(reduceBoardToPlayerMoves(newBoard))
 
         return {
           ...state,
