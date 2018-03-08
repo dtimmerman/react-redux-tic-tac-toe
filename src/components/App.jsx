@@ -6,15 +6,9 @@ import Message from './Message'
 import { playPhases, getActivePlayerNumber, symbols } from '../reducers/ticTacToe'
 import { startGame } from '../actionCreators/game'
 
-const mapStateToProps = (state) => {
-  return {
-    ...state
-  }
-}
+const mapStateToProps = (state) => ({ ...state })
 
-const mapDispatchToProps = {
-  startGame
-}
+const mapDispatchToProps = { startGame }
 
 class App extends React.Component {
   render() {
@@ -28,13 +22,14 @@ class App extends React.Component {
 
     return (
       <div className="game-container">
+        <h1>react-redux tic-tac-toe</h1>
         { playPhase === playPhases.NOT_STARTED && (
           <React.Fragment>
             <p>Push start to begin.</p>
             <button onClick={this.props.startGame}>Start Playing</button>
           </React.Fragment>
         )}
-        
+
         { playPhase === playPhases.PLAYING && (
           <React.Fragment>
             <p>
