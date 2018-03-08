@@ -1,0 +1,44 @@
+body {
+  font-family: "Karma";
+  font-size: 16px;
+}
+
+button {
+  background: #eee;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 32px;
+  text-align: center;
+}
+
+.game-container {
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.board {
+  border-bottom: 1px solid red;
+  width: 103px;
+}
+
+.row {
+  border-top: 1px solid red;
+  height: 33px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  border-right: 1px solid red;
+  float: left;
+  height: 100%;
+  width: 33px;
+}
+
+.column:first-child {
+  border-left: 1px solid red;
+}
