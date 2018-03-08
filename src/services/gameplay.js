@@ -43,25 +43,13 @@ const reduceBoardToPlayerMoves = (collection, y) => {
 const hasWinner = (board) => {
   const moves = reduceBoardToPlayerMoves(board)
   const movesSorted = moves.sort((a, b) => a.y === b.y ? a.y - b.y : a.x - b.x)
-  // console.log('moves sorted', movesSorted)
   const p0 = movesSorted.filter(move => move.player === 0)
   const p1 = movesSorted.filter(move => move.player === 1)
 
-  // console.log(p0)
-  // console.log(p1)
-
-  for (let i = 0; i < 2; i++) {
-    if (hasStraightWin(p0, 'x', i) || hasStraightWin(p0, 'y', i)) {
-      return 0
-    }
-    if (hasStraightWin(p1, 'x', i) || hasStraightWin(p1, 'y', i)) {
-      return 1
-    }
-  }
-  if (hasDiagonalWinA(p0) || hasDiagonalWinB(p0)) {
+  if (hasStraightWin(p0, 'x') || hasStraightWin(p0, 'y') || hasDiagonalWinA(p0) || hasDiagonalWinB(p0)) {
     return 0
   }
-  if (hasDiagonalWinA(p1) || hasDiagonalWinB(p1)) {
+  if (hasStraightWin(p1, 'x') || hasStraightWin(p1, 'y') || hasDiagonalWinA(p1) || hasDiagonalWinB(p1)) {
     return 1
   }
   return false
@@ -83,17 +71,14 @@ const hasDiagonalWinB = (moveTuples: Array<*>): boolean => {
   return matches.length === 3
 }
 
-const hasStraightWin = (moveTuples: Array<*>, staticCoord = 'x', staticValue = 0): boolean => {
-  return false
-  const matches = moveTuples.filter(
-    ({x, y}: Object): boolean => {
-      const expectX = staticCoord === 'x' ? staticValue : [0, 1, 2].includes(x)
-      const expectY = staticCoord !== 'x' ? [0, 1, 2].includes(y) : staticValue
-      console.log('expect x', expectX, 'expect y', expectY)
-      return expectX && expectY
-    }
+const hasStraightWin = (moveTuples: Array<*>, coord: 'x'): boolean => {
+  const counts = moveTuples.reduce(
+    (acc, cur, ind) => {
+      const coordVal = cur[coord]
+      return acc.map((count, index) => coordVal === index ? (count + 1) : count)
+    }, [ 0, 0, 0 ]
   )
-  return matches.length === 3
+  return counts.some(count => count === 3)
 }
 
 export {
