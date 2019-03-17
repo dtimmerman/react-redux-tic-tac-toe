@@ -4,6 +4,15 @@
 import { PLACE_BOARD_MOVE, START_GAME, RESET_GAME } from '../actionCreators/game'
 import { getActivePlayerNumber, remapBoard, hasWinner } from '../services/gameplay'
 
+export type Board = Array<[string, string, string]>
+
+export type State = {
+  playPhase: string,
+  board: Board,
+  turn: number,
+  message: string,
+}
+
 const playPhases = {
   NOT_STARTED: 'NOT_STARTED',
   PLAYING: 'PLAYING',
@@ -15,7 +24,7 @@ const symbols = {
   1: 'O'
 }
 
-const initialState = {
+const initialState: State = {
   playPhase: playPhases.NOT_STARTED,
   board: [
     ['', '', ''],
@@ -26,7 +35,7 @@ const initialState = {
   message: ''
 }
 
-const ticTacToe = (state: Object = initialState, action: Object): Object => {
+const ticTacToe = (state: State = initialState, action: Object): Object => {
   const { turn, board, playPhase } = state
   switch (action.type) {
 

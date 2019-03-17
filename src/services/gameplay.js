@@ -1,11 +1,13 @@
 /**
 * @flow
 */
+import type { Board } from '../reducers/ticTacToe'
+
 const getActivePlayerNumber = (turn: number): number => turn % 2
 
-const remapBoard = (x, y, player, board) => {
+const remapBoard = (x, y, player, board: Board): Board => {
   return board.map(
-    (item, index) => index === y ? remapRow(x, player, item) : item
+    (item, index: number) => index === y ? remapRow(x, player, item) : item
   )
 }
 
